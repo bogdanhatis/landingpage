@@ -1,44 +1,55 @@
 ﻿
-@{
-    Layout = null;
+@{    
     ViewData["Title"] = "Index";
 }
 
-<h2>Index</h2>
-<link href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" type="text/css" />
+<section class="section-spacing">
+    <h2>Index</h2>
+  
+    <a href="@Url.Action("Register","Account")"> Adauga utilizator </a>
 
-<div class="preloader">
-    <div class="preloader_image">
-        <div class="sk-double-bounce">
-            <div class="sk-child sk-double-bounce1"></div>
-            <div class="sk-child sk-double-bounce2"></div>
-        </div>
+    @Html.ActionLink("Adauga user","Register", "Account")
+    
+    <link href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <div class="datatable">
+        <table id="datatable" class="display" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Email</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th>Id</th>
+                    <th>Email</th>
+                    <th>Delete</th>
+                </tr>
+            </tbody>
+        </table>
     </div>
-</div>
-<div class="datatable">
-    <table id="datatable" class="display" style="width:100%">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Email</th>
-                <th>Delete</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <th>Email</th>
-                <th>Delete</th>
-            </tr>
-        </tbody>
-    </table>
-</div>
+</section>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js" type="text/javascript"></script>
 
 <script>
+    function deleteUser(data) {
+        $.ajax({
+            url: '@Url.Action("RemoveUser","Users")',
+            data: { id: data}
+        }).success(function (response) {
+            if (response == true) {
+                $('#datatable').DataTable().ajax.reload();    
+            }
+            else { alert("Nu s-a putut sterge userul");}
 
-    $(document).ready(function () {
+        })
+
+    }
+
+
+    function reload() {
         $('#datatable').DataTable({
             ajax: "/users/getusers",
             columns: [
@@ -46,11 +57,18 @@
                 { data: "email" },
                 {
                     data: "id", render: function (data, type, row, meta) {
-                        data = '<a href="/users/RemoveUser?id=' + data + '">Stergere</a>';
+                        data = '<input value="Stergere" type="Button" onclick="deleteUser(\'' + data + '\')" />';
+
                         return data;
+
+
                     }
                 }
             ]
         });
+    }
+
+    $(document).ready(function () {
+        reload();
     });
 </script>
