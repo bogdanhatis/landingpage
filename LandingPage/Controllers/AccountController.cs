@@ -121,7 +121,7 @@ namespace test.Controllers
             {
                 throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
-
+            
             var authenticatorCode = model.TwoFactorCode.Replace(" ", string.Empty).Replace("-", string.Empty);
 
             var result = await _signInManager.TwoFactorAuthenticatorSignInAsync(authenticatorCode, rememberMe, model.RememberMachine);
