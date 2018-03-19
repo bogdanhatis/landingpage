@@ -22,6 +22,7 @@ namespace test.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
 
