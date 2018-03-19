@@ -334,7 +334,7 @@ body{
 	position:absolute;
 	left:0;
 	bottom:0;
-	background:url(img/banner/curve.png) repeat-x center bottom;
+	background:url(/img/banner/curve.png) repeat-x center bottom;
 	z-index:3;
 }
 .overlay{
@@ -739,7 +739,7 @@ a:hover span i{
 	top:0;
 	content:'';
 	z-index:4;
-	background:url(img/team/shape.png) no-repeat bottom center;
+	background:url(/img/team/shape.png) no-repeat bottom center;
 	-webkit-background-size:100% auto;
 	-moz-background-size:100% auto;
 	-ms-background-size:100% auto;
@@ -758,7 +758,7 @@ a:hover span i{
 	top:0;
 	content:'';
 	z-index:4;
-	background:url(img/team/shape-hover.png) no-repeat bottom center;
+	background:url(/img/team/shape-hover.png) no-repeat bottom center;
 	-webkit-background-size:100% auto;
 	-moz-background-size:100% auto;
 	-ms-background-size:100% auto;
@@ -1016,7 +1016,7 @@ iframe {
 	left:0;
 	bottom:0;
 	content:'';
-	background:url(img/pricing/bg.png) repeat-x center bottom;
+	background:url(/img/pricing/bg.png) repeat-x center bottom;
 }
 .pricing-header h3{
 	font-weight:800;
