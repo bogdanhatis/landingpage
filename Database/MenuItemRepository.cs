@@ -148,5 +148,6 @@ namespace Database
         int Update(MenuItem menuItem);
         List<MenuItem> GetAll();
         List<MenuItem> GetAllSortedAndVisible();
+
     }
 }
