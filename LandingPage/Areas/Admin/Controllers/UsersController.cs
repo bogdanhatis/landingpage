@@ -2,14 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using test.Data;
 using test.Models;
 using test.Models.AccountViewModels;
 
-namespace LandingPage.Controllers
+namespace LandingPage.Areas.Admin.Controllers
 {
+    [Area("Admin")]    
+    [Authorize]
     public class UsersController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -19,12 +22,13 @@ namespace LandingPage.Controllers
             _userManager = userManager;
             _context = context;
         }
+        [Route("admin/users/getusers")]
         public JsonResult GetUsers()
         {
             var xx = _userManager.Users;
             return Json(new { data = xx });
         }
-
+        [Route("admin/users/removeusers")]
         public async Task<JsonResult> RemoveUser(String id)
         {
             var user = await _userManager.FindByIdAsync(id);
@@ -39,7 +43,7 @@ namespace LandingPage.Controllers
             else
                 return Json(false);
         }
-       
+        [Route("admin/users/index")]
         public IActionResult Index(LoginViewModel model)
         {
           

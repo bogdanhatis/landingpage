@@ -1,10 +1,11 @@
 ﻿
 @{    
     ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-<section class="section-spacing">
-    <h2>Index</h2>
+<section class="section-spacing align-users">
+    <h2 class="page-title">Index</h2>
   
     <a href="@Url.Action("Register","Account")"> Adauga utilizator </a>
 
@@ -51,7 +52,7 @@
 
     function reload() {
         $('#datatable').DataTable({
-            ajax: "/users/getusers",
+            ajax: "@Url.Action("GetUsers","Users")",
             columns: [
                 { data: "id" },
                 { data: "email" },

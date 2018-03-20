@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace LandingPage.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Route("admin")]
+    [Route("admin/admin")]
     [Authorize]
     public class AdminController : Controller
     {
