@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DBModels
 {
-    class HtmlTypes
+   public class HtmlTypes
     {
         public int Id { get; set; }
         public String Name { get; set; }

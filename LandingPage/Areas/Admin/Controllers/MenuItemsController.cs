@@ -32,7 +32,7 @@ namespace test.Areas.Admin.Controllers
     {
         var _menuItemManager = new MenuItemManager();
         var item =  _menuItemManager.GetById(ItemId);
-        if (item != null)
+        if (item.ItemId > 0)
         {
             _menuItemManager.Delete(ItemId);
            
@@ -60,7 +60,8 @@ namespace test.Areas.Admin.Controllers
         {         
             if(ModelState.IsValid)
             {
-                if(menuItem.ItemId > 0)
+                if (menuItem.ItemId > 0)   
+                    
                     new MenuItemManager().Update(new MenuItemViewModels().TransformMenuItemVM(menuItem));
                 else
                     new MenuItemManager().Create(new MenuItemViewModels().TransformMenuItemVM(menuItem));
