@@ -1,4 +1,10 @@
-﻿<!DOCTYPE html>
+﻿@{ 
+    var _menuItemRepo = new Service.MenuItemManager();
+    var items = _menuItemRepo.GetAllSortedAndVisible();
+
+}
+
+<!DOCTYPE html>
 <html>
 <head>
 
@@ -62,13 +68,13 @@
                     <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="navbar-collapse collapse" id="navbar">
                         <ul class="nav navbar-nav navbar-right">
-                            <li><a href="/home/index"><span>Home</span></a></li>
-                            <li><a href="/home/index#features"><span>Features</span></a></li>
-                            <li><a href="/home/index#screenshots"><span>Screenshots</span></a></li>
-                            <li><a href="/home/index#team"><span>Team</span></a></li>
-                            <li><a href="/home/index#pricing"><span>Pricing</span></a></li>
-                            <li><a href="/home/index#contact-us"><span>Contact Us</span></a></li>
+                            @foreach (var x in items)
+                            {
+                                var y = "/home/index" + @x.Section;
+                                <li><a href="@y"><span>@x.Name</span></a></li>
+                            }
                             <li><a asp-area="" asp-controller="Admin" asp-action="Index"><span>Log in</span></a></li>
+
                         </ul>
                     </div>
                     <!-- /.navbar-collapse -->

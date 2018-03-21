@@ -11,6 +11,7 @@ namespace test.Areas.Admin.Controllers
     public class MenuItemsController : Controller
     {
 
+
         [Route("admin/menuitem/getall")]
         public JsonResult GetAll()
         {
@@ -42,19 +43,33 @@ namespace test.Areas.Admin.Controllers
     }
         [Route("admin/menuitem/createItem")]
         [HttpGet]
-        public IActionResult Create()
+        public IActionResult Create(int id)
         {
-
             var viewModel = new MenuItemViewModels();
+            if (id>0)
+            {
+                viewModel = (MenuItemViewModels)(new MenuItemManager().GetById(id));
+            }
+            
             return View(viewModel);
 
         }
+        [Route("admin/menuitem/createItem")]
         [HttpPost]
-        public IActionResult Create(MenuItem menuItem)
-        {
-            return RedirectToAction("Index");
+        public IActionResult Create(MenuItemViewModels menuItem)
+        {         
+            if(ModelState.IsValid)
+            {
+                if(menuItem.ItemId > 0)
+                    new MenuItemManager().Update(new MenuItemViewModels().TransformMenuItemVM(menuItem));
+                else
+                    new MenuItemManager().Create(new MenuItemViewModels().TransformMenuItemVM(menuItem));
 
+                return RedirectToAction("Index");
+            }
+            return View(menuItem);
         }
+        
     }
 
 

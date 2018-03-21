@@ -22,7 +22,6 @@ namespace Database
 
         public int Create(MenuItem menuItem)
         {
-            menuItem = new MenuItem();
             using (var con = new SqlConnection(SQLHelper.ConnectionString))
             {
                 var proc = con.CreateCommand();
@@ -83,11 +82,11 @@ namespace Database
         {
             using (var con = new SqlConnection(SQLHelper.ConnectionString))
             {
-                menuItem = new MenuItem();
                 var proc = con.CreateCommand();
                 proc.CommandType = System.Data.CommandType.StoredProcedure;
                 proc.CommandText = "MenuItems_Update";
                 con.Open();
+                proc.Parameters.AddWithValue("@ItemId", menuItem.ItemId);
                 proc.Parameters.AddWithValue("@Name", menuItem.Name);
                 proc.Parameters.AddWithValue("@OrderIndex", menuItem.OrderIndex);
                 proc.Parameters.AddWithValue("@Section", menuItem.Section);

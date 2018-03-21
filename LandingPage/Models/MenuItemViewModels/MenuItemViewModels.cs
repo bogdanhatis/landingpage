@@ -31,5 +31,17 @@ namespace test.Models.MenuItemViewModels
                
             };
         }
+
+        public MenuItem TransformMenuItemVM(MenuItemViewModels model)
+        {
+            return new MenuItem
+            {
+                ItemId = model.ItemId,
+                Name = model.Name,
+                OrderIndex = model.OrderIndex,
+                Section = model.Section,
+                IsVisible = model.IsVisible
+            };
+        }
     }
 }
