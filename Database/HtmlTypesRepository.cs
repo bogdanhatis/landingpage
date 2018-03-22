@@ -38,8 +38,9 @@ namespace Database
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
                 cmd.CommandText = "HtmlTypes_Delete";
                 con.Open();
-                cmd.Parameters.AddWithValue("@id", id);
+                cmd.Parameters.AddWithValue("@Id", id);
                 cmd.ExecuteNonQuery();
+                
             }
         }
 

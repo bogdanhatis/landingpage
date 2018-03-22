@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LandingPage.Models.HtmlTypesViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Service;
 
@@ -16,7 +17,7 @@ namespace LandingPage.Areas.Admin.Controllers
             return Json(new { data = _repo.GetAll() });
         }
 
-        [Route("admin/HtmlTypes/deleteItem")]
+        [Route("admin/HtmlTypes/deleteType")]
         public JsonResult Delete(int id)
         {
             var _repo = new HtmlTypesManager();
@@ -32,6 +33,36 @@ namespace LandingPage.Areas.Admin.Controllers
         public IActionResult Index()
         {
             return View();
+        }
+
+        [Route("admin/HtmlTypes/createType")]
+        [HttpGet]
+        public IActionResult Create(int id)
+        {
+            var viewModel = new HtmlTypesViewModels();
+            if (id > 0)
+            {
+                viewModel = (HtmlTypesViewModels)(new HtmlTypesManager().GetById(id));
+            }
+
+            return View(viewModel);
+
+        }
+        [Route("admin/HtmlTypes/createType")]
+        [HttpPost]
+        public IActionResult Create(HtmlTypesViewModels htmlType)
+        {
+            if (ModelState.IsValid)
+            {
+                if (htmlType.Id > 0)
+
+                    new HtmlTypesManager().Update(new HtmlTypesViewModels().Transform(htmlType));
+                else
+                    new HtmlTypesManager().Create(new HtmlTypesViewModels().Transform(htmlType));
+
+                return RedirectToAction("Index");
+            }
+            return View(htmlType);
         }
     }
 }

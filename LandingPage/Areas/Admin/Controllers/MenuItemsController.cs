@@ -10,8 +10,6 @@ namespace test.Areas.Admin.Controllers
     [Area("admin")]
     public class MenuItemsController : Controller
     {
-
-
         [Route("admin/menuitem/getall")]
         public JsonResult GetAll()
         {
@@ -26,7 +24,8 @@ namespace test.Areas.Admin.Controllers
         }
 
 
-            [Route("admin/menuitem/deleteItem")]
+    
+    [Route("admin/menuitem/deleteItem")]
     
     public JsonResult DeleteItem(int ItemId)
     {

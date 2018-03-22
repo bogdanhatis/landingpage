@@ -1,0 +1,48 @@
+﻿using DBModels;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace LandingPage.Models.CMSViewModels
+{
+    public class CMSViewModels
+    {
+        [Display(Name = "Id")]
+        public int Id { get; set; }
+        [Display(Name = "Nume")]
+        public String Name { get; set; }
+        [Display(Name = "Menu Item")]
+        public int MenuItemId { get; set; }
+        [Display(Name = "Tip HTML")]
+        public int HtmlType { get; set; }
+        [Display(Name = "Continut")]
+        public String Content { get; set; }
+
+        public static explicit operator CMSViewModels(CMS model)
+        {
+            return new CMSViewModels
+            {
+                Id = model.Id,
+                Name = model.Name,
+                MenuItemId = model.MenuItemId,
+                HtmlType = model.HtmlType,
+                Content = model.Content
+            };
+
+        }
+
+        public CMS Transform(CMSViewModels model)
+        {
+            return new CMS
+            {
+                Id = model.Id,
+                Name = model.Name,
+                MenuItemId = model.MenuItemId,
+                HtmlType = model.HtmlType,
+                Content = model.Content
+            };
+        }
+    }
+}
