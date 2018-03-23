@@ -1,4 +1,5 @@
 ﻿using DBModels;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -19,6 +20,8 @@ namespace LandingPage.Models.CMSViewModels
         public int HtmlType { get; set; }
         [Display(Name = "Continut")]
         public String Content { get; set; }
+
+        public IFormFile FileUploadId { get; set; }
 
         public static explicit operator CMSViewModels(CMS model)
         {

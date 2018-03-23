@@ -12,6 +12,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.2" PrivateAssets="All" />
     <PackageReference Include="Microsoft.TypeScript.Compiler" Version="2.7.2" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.3" PrivateAssets="All" />
+    <PackageReference Include="TinyMCE" Version="4.7.9" />
   </ItemGroup>
 
   <ItemGroup>
@@ -22,6 +23,7 @@
 
   <ItemGroup>
     <Folder Include="Areas\Admin\Views\Products\" />
+    <Folder Include="wwwroot\siteimages\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -52,6 +52,7 @@ namespace LandingPage.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult Create(HtmlTypesViewModels htmlType)
         {
+            
             if (ModelState.IsValid)
             {
                 if (htmlType.Id > 0)

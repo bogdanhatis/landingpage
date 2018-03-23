@@ -6,12 +6,23 @@ using Microsoft.AspNetCore.Mvc;
 using DBModels;
 using LandingPage.Models.CMSViewModels;
 using Service;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Http;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
+using test;
 
 namespace LandingPage.Areas.Admin.Controllers
 {
     [Area("admin")]
     public class CMSController : Controller
     {
+        private IHostingEnvironment _hostingEnvironment;
+
+        public CMSController(IHostingEnvironment emv)
+        {
+            _hostingEnvironment = emv;
+        }
 
         [Route("admin/cms/getall")]
         public JsonResult GetAll()
@@ -46,7 +57,11 @@ namespace LandingPage.Areas.Admin.Controllers
         [Route("admin/cms/createItem")]
         [HttpGet]
         public IActionResult Create(int id)
+
         {
+            ViewBag.MenuItems = new SelectList(new MenuItemManager().GetAll(), "ItemId", "Name");
+            ViewBag.HtmlTypes = new SelectList(new HtmlTypesManager().GetAll(), "Id", "Name");
+
             var viewModel = new CMSViewModels();
             if (id > 0)
             {
@@ -58,12 +73,46 @@ namespace LandingPage.Areas.Admin.Controllers
         }
         [Route("admin/cms/createItem")]
         [HttpPost]
-        public IActionResult Create(CMSViewModels item)
+         public async Task<IActionResult> Create(CMSViewModels item, IFormFile FileUploadId)
         {
+            var content = "";
+            if (item.HtmlType == 1)
+            {
+                content = Request.Form["ContentId"].ToString();
+            }
+            else
+                if (item.HtmlType == 2)
+            {
+                content = Request.Form["TextAreaId"].ToString();
+            }
+            else
+
+                if (item.HtmlType == 3)
+            {
+                content = Request.Form["HtmlEditorId"].ToString();
+            }
+            else
+            {
+                if (item.FileUploadId != null)
+            {
+                    var filename = item.FileUploadId.FileName;
+                    var path = Path.Combine(_hostingEnvironment.WebRootPath+"\\siteimages", filename);
+                    var relpath = "~/wwwroot/siteimages/"+filename;
+
+                    content = relpath;
+                    using (var stream = new FileStream(path, FileMode.Create))
+                    {
+                        await item.FileUploadId.CopyToAsync(stream);
+                    }
+                }
+            }
+           ViewBag.MenuItems = new SelectList(new MenuItemManager().GetAll(), "ItemId", "Name");
+           ViewBag.HtmlTypes = new SelectList(new HtmlTypesManager().GetAll(), "Id", "Name");
+            item.Content = content;
+
             if (ModelState.IsValid)
             {
                 if (item.Id > 0)
-
                     new CMSManager().Update(new CMSViewModels().Transform(item));
                 else
                     new CMSManager().Create(new CMSViewModels().Transform(item));
