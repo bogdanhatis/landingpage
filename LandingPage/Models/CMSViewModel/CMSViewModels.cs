@@ -22,6 +22,9 @@ namespace LandingPage.Models.CMSViewModels
         public String Content { get; set; }
 
         public IFormFile FileUploadId { get; set; }
+        public String ContentId { get; set; }
+        public String TextAreaId { get; set; }
+        public String HtmlEditorId { get; set; }
 
         public static explicit operator CMSViewModels(CMS model)
         {
@@ -31,7 +34,10 @@ namespace LandingPage.Models.CMSViewModels
                 Name = model.Name,
                 MenuItemId = model.MenuItemId,
                 HtmlType = model.HtmlType,
-                Content = model.Content
+                Content = model.Content,
+                ContentId = model.Content,
+                TextAreaId = model.Content,
+                HtmlEditorId = model.Content
             };
 
         }

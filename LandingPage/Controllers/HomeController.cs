@@ -13,7 +13,8 @@ namespace test.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            var ImportAll = new CMSManager().GetAll();
+            return View(ImportAll);
         }
 
         public IActionResult About()

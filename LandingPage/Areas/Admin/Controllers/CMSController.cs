@@ -78,18 +78,18 @@ namespace LandingPage.Areas.Admin.Controllers
             var content = "";
             if (item.HtmlType == 1)
             {
-                content = Request.Form["ContentId"].ToString();
+                content = item.ContentId;
             }
             else
                 if (item.HtmlType == 2)
             {
-                content = Request.Form["TextAreaId"].ToString();
+                content = item.TextAreaId;
             }
             else
 
                 if (item.HtmlType == 3)
             {
-                content = Request.Form["HtmlEditorId"].ToString();
+                content = item.HtmlEditorId;
             }
             else
             {
@@ -97,7 +97,7 @@ namespace LandingPage.Areas.Admin.Controllers
             {
                     var filename = item.FileUploadId.FileName;
                     var path = Path.Combine(_hostingEnvironment.WebRootPath+"\\siteimages", filename);
-                    var relpath = "~/wwwroot/siteimages/"+filename;
+                    var relpath = "/siteimages/"+filename;
 
                     content = relpath;
                     using (var stream = new FileStream(path, FileMode.Create))
