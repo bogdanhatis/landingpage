@@ -44,5 +44,10 @@ namespace Service
         {
             return _repo.GetAll();
         }
+
+        public List<CMS> GetByMenuItemId(int id)
+        {
+            return _repo.GetByMenuItemId(id);
+        }
     }
 }

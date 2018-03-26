@@ -2,6 +2,13 @@
 
 @{
     ViewData["Title"] = "Home Page";
+    var _cmsRepo = new Service.CMSManager();
+    var home = _cmsRepo.GetByMenuItemId(5);
+    var features = _cmsRepo.GetByMenuItemId(6);
+
+    var screenshots = new Service.CMSDetailsManager().GetByCMSId(38);
+    var team = new Service.CMSDetailsManager().GetByCMSId(39);
+    var reviews = new Service.CMSDetailsManager().GetByCMSId(40);
 }
 
 <!--Preload-->
@@ -181,12 +188,12 @@
         <div class="row">
             <div class="col-xs-12 col-lg-8 col-lg-offset-2">
                 <div class="screenshot-carousel" data-carousel-3d>
-                    <img src="~/img/screenshot/1.png" alt="">
-                    <img src="~/img/screenshot/2.png" alt="">
-                    <img src="~/img/screenshot/3.png" alt="">
-                    <img src="~/img/screenshot/4.png" alt="">
-                    <img src="~/img/screenshot/5.png" alt="">
-                    <img src="~/img/screenshot/6.png" alt="">
+                    @foreach (var screenshot in screenshots)
+                    {
+                        <img src="@screenshot.Content" alt="">
+                    }
+                    
+       
                 </div>
             </div>
         </div>
@@ -224,73 +231,16 @@
                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, <br>sed do eiusmod tempor incididunt ut labore.</p>
             </div>
         </div>
-        <div class="row">
-            <div class="col-xs-12">
-                <div class="owl-carousel" id="member-carousel">
-                    <div class="team-member">
-                        <div class="team-thumb">
-                            <img src="~/img/team/1.jpg" alt="">
-                            <div class="contact-bio">
-                                <ul>
-                                    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-instagram"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <h4>Ursula Smith</h4>
-                        <h5>CEO</h5>
-                    </div>
-                    <div class="team-member wow fadeIn">
-                        <div class="team-thumb">
-                            <img src="~/img/team/2.jpg" alt="">
-                            <div class="contact-bio">
-                                <ul>
-                                    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-instagram"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <h4>Bernard Dent</h4>
-                        <h5>UI/UX Designer</h5>
-                    </div>
-                    <div class="team-member wow fadeIn">
-                        <div class="team-thumb">
-                            <img src="~/img/team/3.jpg" alt="">
-                            <div class="contact-bio">
-                                <ul>
-                                    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-instagram"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <h4>Robert Smith</h4>
-                        <h5>Web Developer</h5>
-                    </div>
 
-                    <div class="team-member">
-                        <div class="team-thumb">
-                            <img src="~/img/team/1.jpg" alt="">
-                            <div class="contact-bio">
-                                <ul>
-                                    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-instagram"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <h4>Ursula Smith</h4>
-                        <h5>CEO</h5>
-                    </div>
+        <div class="row">
+            @foreach (var teamMember in team)
+
+            {<div class="col-xs-12">
+            <div class="owl-carousel" id="member-carousel">
+                <div class="team-member">
                     <div class="team-member wow fadeIn">
                         <div class="team-thumb">
-                            <img src="~/img/team/2.jpg" alt="">
+                            <img src="@teamMember.Content" alt="">
                             <div class="contact-bio">
                                 <ul>
                                     <li><a href="#"><i class="fa fa-facebook"></i></a></li>
@@ -299,27 +249,16 @@
                                     <li><a href="#"><i class="fa fa-instagram"></i></a></li>
                                 </ul>
                             </div>
+
+
                         </div>
-                        <h4>Bernard Dent</h4>
-                        <h5>UI/UX Designer</h5>
                     </div>
-                    <div class="team-member wow fadeIn">
-                        <div class="team-thumb">
-                            <img src="~/img/team/3.jpg" alt="">
-                            <div class="contact-bio">
-                                <ul>
-                                    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-instagram"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <h4>Robert Smith</h4>
-                        <h5>Web Developer</h5>
-                    </div>
+                    <h4>@teamMember.Name</h4>
+
+                </div>
                 </div>
             </div>
+            }
         </div>
     </div>
 </section>
@@ -450,62 +389,38 @@
             </div>
         </div>
         <div class="row">
+
+
             <div class="col-xs-12 col-md-8 col-md-offset-2">
                 <div id="testimonials-carousel" class="carousel slide" data-ride="carousel" data-pause="false">
                     <div class="carousel-inner">
-                        <div class="item text-center bg-img active" style="background-image:url(/img/testimonials/bg.jpg);">
-                            <div class="overlay"></div>
-                            <div class="user-img">
-                                <img src="~/img/testimonials/1.jpg" alt="">
-                            </div>
-                            <div class="tesimonial-text">
-                                <p>Phasellus luctus commodo ullamcorper a posuere rhoncus commodo elit. Aenean congue, risus utaliquam dapibus. Maecenas volutpat, diam enim sagittis quam, id porta quam. Maecenas volutpat, diam enim sagittis quam.</p>
-                                <h5>Robert Smith, untitled co.</h5>
-                                <div class="ratting">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                </div>
-                            </div>
-                        </div>
+                        @foreach (var review in reviews)
+                        {
 
-                        <div class="item text-center bg-img" style="background-image:url(/img/testimonials/bg-2.jpg);">
-                            <div class="overlay"></div>
-                            <div class="user-img">
-                                <img src="~/img/testimonials/2.jpg" alt="">
-                            </div>
-                            <div class="tesimonial-text">
-                                <p>Phasellus luctus commodo ullamcorper a posuere rhoncus commodo elit. Aenean congue, risus utaliquam dapibus. Maecenas volutpat, diam enim sagittis quam, id porta quam. Maecenas volutpat, diam enim sagittis quam.</p>
-                                <h5>Robert Smith, untitled co.</h5>
-                                <div class="ratting">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                </div>
-                            </div>
-                        </div>
 
-                        <div class="item text-center bg-img" style="background-image:url(/img/testimonials/bg-3.jpg);">
-                            <div class="overlay"></div>
-                            <div class="user-img">
-                                <img src="~/img/testimonials/1.jpg" alt="">
-                            </div>
-                            <div class="tesimonial-text">
-                                <p>Phasellus luctus commodo ullamcorper a posuere rhoncus commodo elit. Aenean congue, risus utaliquam dapibus. Maecenas volutpat, diam enim sagittis quam, id porta quam. Maecenas volutpat, diam enim sagittis quam.</p>
-                                <h5>Robert Smith, untitled co.</h5>
-                                <div class="ratting">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
+
+                                <div class="item text-center bg-img" style="background-image:url(/img/testimonials/bg.jpg);">
+                                    <div class="overlay"></div>
+                                    <div class="user-img">
+                                        <img src="~/img/testimonials/1.jpg" alt="">
+                                    </div>
+                                    <div class="tesimonial-text">
+                                        <p>@review.Content</p>
+                                        <h5>@review.Name</h5>
+                                        <div class="ratting">
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
+
+
+
+
+                         }
                     </div>
 
                     <ol class="carousel-indicators">

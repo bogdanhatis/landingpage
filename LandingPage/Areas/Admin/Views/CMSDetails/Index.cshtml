@@ -5,7 +5,7 @@
 
 <h2 class="page-title">Index</h2>
 
-<a href="@Url.Action("Create","CMS")"> Adauga item </a>
+<a href="@Url.Action("Create","CMSDetails")"> Adauga item </a>
 
 
 <link href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
@@ -14,9 +14,10 @@
         <thead>
             <tr>
                 <th>Id</th>
+                <th>CMSId</th>
                 <th>Name</th>
-                <th>MenuItemId</th>
-                <th>HtmlType</th>
+                <th>OrderIndex</th>
+                <th>HtmlTypeId</th>
                 <th>Content</th>
                 <th>Delete</th>
                 <th>Edit</th>
@@ -25,9 +26,10 @@
         <tbody>
             <tr>
                 <th>Id</th>
+                <th>CMSId</th>
                 <th>Name</th>
-                <th>MenuItemId</th>
-                <th>HtmlType</th>
+                <th>OrderIndex</th>
+                <th>HtmlTypeId</th>
                 <th>Content</th>
                 <th>Delete</th>
                 <th>Edit</th>
@@ -42,12 +44,13 @@
 
     function reload() {
         $('#datatable').DataTable({
-            ajax: "@Url.Action("GetAll","CMS")",
+            ajax: "@Url.Action("GetAll","CMSDetails")",
             columns: [
                 { data: "id" },
+                {data: "cmsId"},
                 { data: "name" },
-                { data: "menuItemId" },
-                { data: "htmlType" },
+                { data: "orderIndex" },
+                { data: "htmlTypeId" },
                 { data: "content"},
                 {
                     data: "id", render: function (data, type, row, meta) {
@@ -58,7 +61,7 @@
                 },
                 {
                     data: "id", render: function (data, type, row, meta) {
-                        var link = '/admin/cms/createItem?id=' + data;
+                        var link = '/admin/cmsdetails/createItem?id=' + data;
                         data = '<a href="' + link + '">Edit</a>';
                         return data;
                     }
@@ -66,10 +69,10 @@
             ]
         });
     }
-    
+
      function deleteItem(data) {
         $.ajax({
-            url: '@Url.Action("DeleteItem","CMS")',
+            url: '@Url.Action("DeleteItem","CMSDetails")',
             data: { ItemId: data}
         }).success(function (response) {
             if (response == true) {
@@ -83,12 +86,6 @@
 
     $(document).ready(function () {
         reload();
-        var table = $('#datatable').DataTable();
-        $('#datatable tbody').on('click', 'tr', function () {
-            var data = table.row(this).data();
-            console.log(data.id);
-            window.location = "/admin/cmsdetails";
-        });
     });
 
 

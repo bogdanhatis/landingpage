@@ -13,6 +13,23 @@ namespace test.Controllers
     {
         public IActionResult Index()
         {
+            var lista = new MenuItemManager().GetAll().Select(obj => obj.ItemId);
+            var dictionary = new Dictionary<int, Tuple<String, String>>();
+            List<string> dummy = null;
+            foreach(var menuItem in lista)
+            {
+                var details = new CMSManager().GetByMenuItemId(menuItem);
+                foreach(var detail in details)
+                {
+                    var det = new CMSDetailsManager().GetByCMSId(detail.Id);
+                    dummy = new List<string>();
+                    foreach(var x in det)
+                    {
+                        dummy.Add(x.ToString());
+                    }
+                }
+                
+            }
             var ImportAll = new CMSManager().GetAll();
             return View(ImportAll);
         }

@@ -6,32 +6,34 @@ using DBModels;
 
 namespace Database
 {
-    public class CMSRepository : ICMSRepository
+    public class CMSDetailsRepository : ICMSDetailsRepository
     {
-        private CMS FromReader(SqlDataReader sqlDataReader)
+        private CMSDetails FromReader(SqlDataReader sqlDataReader)
         {
-            return new CMS
+            return new CMSDetails
             {
                 Id = (int)sqlDataReader["Id"],
+                CMSId=(int)sqlDataReader["CMSId"],
                 Name = sqlDataReader["Name"].ToString(),
-                MenuItemId = (int)sqlDataReader["MenuItemId"],
-                HtmlType = (int)sqlDataReader["HtmlType"],
+                OrderIndex = (int)sqlDataReader["OrderIndex"],
+                HtmlTypeId = (int)sqlDataReader["HtmlTypeId"],
                 Content = sqlDataReader["Content"].ToString()
             };
         }
 
-        public int Create(CMS cms)
+        public int Create(CMSDetails cmsdetails)
         {
             using (var con = new SqlConnection(SQLHelper.ConnectionString))
             {
                 var proc = con.CreateCommand();
                 proc.CommandType = System.Data.CommandType.StoredProcedure;
-                proc.CommandText = "CMS_Create";
+                proc.CommandText = "CMSDetails_Create";
                 con.Open();
-                proc.Parameters.AddWithValue("@Name", cms.Name);
-                proc.Parameters.AddWithValue("@MenuItemId", cms.MenuItemId);
-                proc.Parameters.AddWithValue("@HtmlType", cms.HtmlType);
-                proc.Parameters.AddWithValue("@Content", cms.Content);
+                proc.Parameters.AddWithValue("@CMSId", cmsdetails.CMSId);
+                proc.Parameters.AddWithValue("@Name", cmsdetails.Name);
+                proc.Parameters.AddWithValue("@OrderIndex", cmsdetails.OrderIndex);
+                proc.Parameters.AddWithValue("@HtmlTypeId", cmsdetails.HtmlTypeId);
+                proc.Parameters.AddWithValue("@Content", cmsdetails.Content);
                 return (int)proc.ExecuteScalar();
             }
         }
@@ -42,7 +44,7 @@ namespace Database
             {
                 var proc = con.CreateCommand();
                 proc.CommandType = System.Data.CommandType.StoredProcedure;
-                proc.CommandText = "CMS_Delete";
+                proc.CommandText = "CMSDetails_Delete";
                 con.Open();
                 proc.Parameters.AddWithValue("@Id", id);
                 using (var reader = proc.ExecuteReader())
@@ -56,13 +58,13 @@ namespace Database
             }
         }
 
-        public CMS GetById(int id)
+        public CMSDetails GetById(int id)
         {
             using (var con = new SqlConnection(SQLHelper.ConnectionString))
             {
                 var proc = con.CreateCommand();
                 proc.CommandType = System.Data.CommandType.StoredProcedure;
-                proc.CommandText = "CMS_GetById";
+                proc.CommandText = "CMSDetails_GetById";
                 con.Open();
                 proc.Parameters.AddWithValue("@Id", id);
                 using (var reader = proc.ExecuteReader())
@@ -80,58 +82,37 @@ namespace Database
             }
         }
 
-        public List<CMS> GetByMenuItemId(int id)
+        public int Update(CMSDetails cmsdetails)
         {
             using (var con = new SqlConnection(SQLHelper.ConnectionString))
             {
                 var proc = con.CreateCommand();
                 proc.CommandType = System.Data.CommandType.StoredProcedure;
-                proc.CommandText = "CMS_GetByMenuItemId";
+                proc.CommandText = "CMSDetails_Update";
                 con.Open();
-                proc.Parameters.AddWithValue("@Id", id);
-                List<CMS> list = null;
-                using (var reader = proc.ExecuteReader())
-                {
-                    list = new List<CMS>();
-                    while (reader.Read())
-                    {
-                        list.Add(FromReader(reader));
-                    }
-                }
-                return list;
-
-            }
-        }
-
-        public int Update(CMS cms)
-        {
-            using (var con = new SqlConnection(SQLHelper.ConnectionString))
-            {
-                var proc = con.CreateCommand();
-                proc.CommandType = System.Data.CommandType.StoredProcedure;
-                proc.CommandText = "CMS_Update";
-                con.Open();
-                proc.Parameters.AddWithValue("@Id", cms.Id);
-                proc.Parameters.AddWithValue("@Name", cms.Name);
-                proc.Parameters.AddWithValue("@MenuItemId", cms.MenuItemId);
-                proc.Parameters.AddWithValue("@HtmlType", cms.HtmlType);
-                proc.Parameters.AddWithValue("@Content", cms.Content);
+                proc.Parameters.AddWithValue("@Id", cmsdetails.Id);
+                proc.Parameters.AddWithValue("@CMSId", cmsdetails.CMSId);
+              
+                proc.Parameters.AddWithValue("@Name", cmsdetails.Name);
+                proc.Parameters.AddWithValue("@OrderIndex", cmsdetails.OrderIndex);
+                proc.Parameters.AddWithValue("@HtmlTypeId", cmsdetails.HtmlTypeId);
+                proc.Parameters.AddWithValue("@Content", cmsdetails.Content);
                 return (int)proc.ExecuteScalar();
             }
         }
 
-        public List<CMS> GetAll()
+        public List<CMSDetails> GetAll()
         {
             using (var con = new SqlConnection(SQLHelper.ConnectionString))
             {
                 var proc = con.CreateCommand();
                 proc.CommandType = System.Data.CommandType.StoredProcedure;
-                proc.CommandText = "CMS_GetAll";
+                proc.CommandText = "CMSDetails_GetAll";
                 con.Open();
-                List<CMS> list = null;
+                List<CMSDetails> list = null;
                 using (var reader = proc.ExecuteReader())
                 {
-                    list = new List<CMS>();
+                    list = new List<CMSDetails>();
                     while (reader.Read())
                     {
                         list.Add(FromReader(reader));
@@ -140,15 +121,36 @@ namespace Database
                 return list;
             }
         }
+
+        public List<CMSDetails> GetByCMSId(int id)
+        {
+            using (var con = new SqlConnection(SQLHelper.ConnectionString))
+            {
+                var proc = con.CreateCommand();
+                proc.CommandType = System.Data.CommandType.StoredProcedure;
+                proc.CommandText = "CMSDetails_GetByCMSId";
+                con.Open();
+                proc.Parameters.AddWithValue("@CMSId", id);
+                List<CMSDetails> lista = new List<CMSDetails>();
+                using (var reader = proc.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        lista.Add(FromReader(reader));
+                    }
+                }
+                return lista;
+            }
+        }
     }
 
-    public interface ICMSRepository
+    public interface ICMSDetailsRepository
     {
-        int Create(CMS cms);
+        int Create(CMSDetails cmsdetails);
         void Delete(int id);
-        CMS GetById(int id);
-        int Update(CMS cms);
-        List<CMS> GetAll();
-        List<CMS> GetByMenuItemId(int id);
+        CMSDetails GetById(int id);
+        int Update(CMSDetails cmsdetails);
+        List<CMSDetails> GetAll();
+        List<CMSDetails> GetByCMSId(int id);
     }
 }
