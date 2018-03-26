@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using LandingPage.Models.CMSDetailsViewModels;
 
 namespace LandingPage.Models.CMSViewModels
 {
@@ -25,6 +26,11 @@ namespace LandingPage.Models.CMSViewModels
         public String ContentId { get; set; }
         public String TextAreaId { get; set; }
         public String HtmlEditorId { get; set; }
+
+
+        public List<LandingPage.Models.CMSDetailsViewModels.CMSDetailsViewModels> ScreenshotsVMList;
+        public List<LandingPage.Models.CMSDetailsViewModels.CMSDetailsViewModels> TeamVMList;
+        public List<LandingPage.Models.CMSDetailsViewModels.CMSDetailsViewModels> ReviewsVMList;
 
         public static explicit operator CMSViewModels(CMS model)
         {

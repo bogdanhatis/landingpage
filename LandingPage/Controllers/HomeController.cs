@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using LandingPage.Models.CMSDetailsViewModels;
+using LandingPage.Models.CMSViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Service;
 using test.Models;
@@ -12,26 +14,45 @@ namespace test.Controllers
     public class HomeController : Controller
     {
         public IActionResult Index()
-        {
-            var lista = new MenuItemManager().GetAll().Select(obj => obj.ItemId);
-            var dictionary = new Dictionary<int, Tuple<String, String>>();
-            List<string> dummy = null;
-            foreach(var menuItem in lista)
+        {           
+            var ImportAll = new CMSManager().GetAll();
+
+            var CMSViewModelList = new List<CMSViewModels>();
+            foreach(var CMS in ImportAll)
             {
-                var details = new CMSManager().GetByMenuItemId(menuItem);
-                foreach(var detail in details)
-                {
-                    var det = new CMSDetailsManager().GetByCMSId(detail.Id);
-                    dummy = new List<string>();
-                    foreach(var x in det)
-                    {
-                        dummy.Add(x.ToString());
-                    }
-                }
+                var CMSViewModel = (CMSViewModels)CMS;
+                CMSViewModelList.Add(CMSViewModel);
+            }
+            
+
+            var screenshots = new Service.CMSDetailsManager().GetByCMSId(38);
+            var screenshotsDetailsVMList = new List<CMSDetailsViewModels>();
+            foreach(var screenshotsDetail in screenshots)
+            {
+                var screenshotsDetailVM = (CMSDetailsViewModels)screenshotsDetail;
+                screenshotsDetailsVMList.Add(screenshotsDetailVM);
+            }
+
+            var team = new Service.CMSDetailsManager().GetByCMSId(39);
+            var teamDetailsVMList = new List<CMSDetailsViewModels>();
+            foreach(var teamDetail in team)
+            {
+                var teamDetailVM = (CMSDetailsViewModels)teamDetail;
+                teamDetailsVMList.Add(teamDetailVM);
+            }
+
+            var reviews = new Service.CMSDetailsManager().GetByCMSId(40);
+            var reviewsDetails = new Service.CMSDetailsManager().GetByCMSId(40);
+            var listCMSDetailsVM = new List<CMSDetailsViewModels>();
+            foreach(var reviewDetail in reviewsDetails)
+            {
+                var reviewDetailViewModel = (CMSDetailsViewModels)reviewDetail;
+                listCMSDetailsVM.Add(reviewDetailViewModel);
                 
             }
-            var ImportAll = new CMSManager().GetAll();
-            return View(ImportAll);
+
+
+            return View(CMSViewModelList);
         }
 
         public IActionResult About()
