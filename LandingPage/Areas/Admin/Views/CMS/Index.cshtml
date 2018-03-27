@@ -84,7 +84,7 @@
     $(document).ready(function () {
         reload();
         var table = $('#datatable').DataTable();
-        $('#datatable tbody').on('click', 'tr', function () {
+        $('#datatable tbody').on('dblclick', 'tr', function () {
             var data = table.row(this).data();
             console.log(data.id);
             window.location = "/admin/cmsdetails";

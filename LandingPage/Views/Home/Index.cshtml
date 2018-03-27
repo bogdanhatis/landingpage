@@ -1,14 +1,8 @@
-﻿@model IEnumerable<DBModels.CMS>
-
+﻿@model List<LandingPage.Models.CMSViewModels.CMSViewModels>
+@using LandingPage.Extensions
 @{
     ViewData["Title"] = "Home Page";
     var _cmsRepo = new Service.CMSManager();
-    var home = _cmsRepo.GetByMenuItemId(5);
-    var features = _cmsRepo.GetByMenuItemId(6);
-
-    
-   
-    
 }
 
 <!--Preload-->
@@ -29,8 +23,8 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-6">
                     <div class="caption-inner text-left">
-                        <h1 class="animated fadeInUp">@Model.Where(item => item.Name == "Header Title").First().Content</h1>
-                        <p class="animated fadeInUp">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis veritatis, nam fuga rerum, unde provident iusto nisi.</p>
+                        <h1 class="animated fadeInUp">@HtmlHelperForView.ViewHelper(Model,36,"HeaderDescription")</h1>
+                        <p class="animated fadeInUp">@HtmlHelperForView.ViewHelper(Model, 36, "HeaderSubtitle")</p>
 
                         <a href="#" class="btn btn-primary animated fadeInLeft"><span>Get Started</span></a> <a href="#" class="btn btn-default animated fadeInRight"><span>Read More</span></a>
                     </div>
@@ -38,7 +32,7 @@
 
                 <div class="col-xs-12 col-sm-6 hidden-xs">
                     <div class="caption-thumb text-right animated fadeInUp">
-                        <img src="@Model.Where(item=>item.Name== "Img").First().Content">
+                        <img src="@HtmlHelperForView.ViewHelper(Model, 36, "Img")">
                     </div>
                 </div>
             </div>
@@ -52,8 +46,8 @@
     <div class="container">
         <div class="row">
             <div class="section-title text-center">
-                <h2>Awesome features</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, <br>sed do eiusmod tempor incididunt ut labore.</p>
+                <h2>@HtmlHelperForView.ViewHelper(Model, 41, "HeaderDescription")</h2>
+                <p>@HtmlHelperForView.ViewHelper(Model, 41, "HeaderSubtitle")</p>
             </div>
         </div>
 
@@ -181,19 +175,18 @@
     <div class="container">
         <div class="row">
             <div class="section-title text-center">
-                <h2>App Screenshots</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, <br>sed do eiusmod tempor incididunt ut labore.</p>
+                <h2>@HtmlHelperForView.ViewHelper(Model, 42, "HeaderDescription")</h2>
+                <p>@HtmlHelperForView.ViewHelper(Model, 42, "HeaderSubtitle")</p>
             </div>
         </div>
         <div class="row">
             <div class="col-xs-12 col-lg-8 col-lg-offset-2">
                 <div class="screenshot-carousel" data-carousel-3d>
-                    @foreach (var screenshot in screenshots)
+                    @foreach (var screenshot in HtmlHelperForView.ImageViewHelper(Model, 4, 42,"Screenshot"))
                     {
-                        <img src="@screenshot.Content" alt="">
+                        <img src='@screenshot' alt="" />
+
                     }
-
-
                 </div>
             </div>
         </div>
@@ -227,38 +220,41 @@
     <div class="container">
         <div class="row">
             <div class="section-title text-center">
-                <h2>Expert Team</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, <br>sed do eiusmod tempor incididunt ut labore.</p>
+                <h2>@HtmlHelperForView.ViewHelper(Model, 39, "HeaderDescription")</h2>
+                <p>@HtmlHelperForView.ViewHelper(Model, 39, "HeaderSubtitle")</p>
             </div>
         </div>
-
+        @{ 
+            var memberName = HtmlHelperForView.ImageViewHelper(Model, 1, 39, "MemberName");
+            var memberImage = HtmlHelperForView.ImageViewHelper(Model, 4, 39, "MemberImage");
+        }
+        
         <div class="row">
-            @foreach (var teamMember in team)
-
-            {<div class="col-xs-12">
+            
+                <div class="col-xs-12">
                     <div class="owl-carousel" id="member-carousel">
-                        <div class="team-member">
-                            <div class="team-member wow fadeIn">
-                                <div class="team-thumb">
-                                    <img src="@teamMember.Content" alt="">
-                                    <div class="contact-bio">
-                                        <ul>
-                                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                            <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                                            <li><a href="#"><i class="fa fa-instagram"></i></a></li>
-                                        </ul>
+                        @for (int i = 0; i < memberName.Count; i++)
+                        {
+                            <div class="team-member">
+                                <div class="team-member wow fadeIn">
+                                    <div class="team-thumb">
+                                        <img src="@memberImage[i]" alt="">
+                                        <div class="contact-bio">
+                                            <ul>
+                                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                                            </ul>
+                                        </div>
                                     </div>
-
-
                                 </div>
+                                <h5>@memberName[i]</h5>
                             </div>
-                            <h4>@teamMember.Name</h4>
-
-                        </div>
+                        }
                     </div>
                 </div>
-            }
+            
         </div>
     </div>
 </section>
@@ -282,8 +278,8 @@
     <div class="container">
         <div class="row">
             <div class="section-title text-center">
-                <h2>Pricing Plan</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, <br>sed do eiusmod tempor incididunt ut labore.</p>
+                <h2>@HtmlHelperForView.ViewHelper(Model, 43, "HeaderDescription")</h2>
+                <p>@HtmlHelperForView.ViewHelper(Model, 43, "HeaderSubtitle")</p>
             </div>
         </div>
         <div class="row">
@@ -384,8 +380,8 @@
     <div class="container">
         <div class="row">
             <div class="section-title text-center">
-                <h2>Clients reviews</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, <br>sed do eiusmod tempor incididunt ut labore.</p>
+                <h2>@HtmlHelperForView.ViewHelper(Model, 40, "HeaderDescription")</h2>
+                <p>@HtmlHelperForView.ViewHelper(Model, 40, "HeaderSubtitle")</p>
             </div>
         </div>
         <div class="row">
@@ -458,59 +454,6 @@
     </div>
 </section>
 
-<section class="section-spacing" id="reviews">
-    <div class="container">
-        <div class="row">
-            <div class="section-title text-center">
-                <h2>Clients reviews</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, <br>sed do eiusmod tempor incididunt ut labore.</p>
-            </div>
-        </div>
-        <div class="row">
-
-
-            <div class="col-xs-12 col-md-8 col-md-offset-2">
-                <div id="testimonials-carousel" class="carousel slide" data-ride="carousel" data-pause="false">
-                    <div class="carousel-inner">
-                        @foreach (var review in reviews)
-                        {
-
-
-
-                            <div class="item text-center bg-img" style="background-image:url(/img/testimonials/bg.jpg);">
-                                <div class="overlay"></div>
-                                <div class="user-img">
-                                    <img src="~/img/testimonials/1.jpg" alt="">
-                                </div>
-                                <div class="tesimonial-text">
-                                    <p>@review.Content</p>
-                                    <h5>@review.Name</h5>
-                                    <div class="ratting">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                    </div>
-                                </div>
-                            </div>
-
-
-
-
-                        }
-                    </div>
-
-                    <ol class="carousel-indicators">
-                        <li data-target="#testimonials-carousel" data-slide-to="0" class="active"></li>
-                        <li data-target="#testimonials-carousel" data-slide-to="1" class=""></li>
-                        <li data-target="#testimonials-carousel" data-slide-to="2"></li>
-                    </ol>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
 <!-- end pricing -->
 
 <section id="map" class="no-padding"></section>
@@ -520,8 +463,8 @@
     <div class="container">
         <div class="row">
             <div class="section-title text-center">
-                <h2>Contact us</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, <br>sed do eiusmod tempor incididunt ut labore.</p>
+                <h2>@HtmlHelperForView.ViewHelper(Model, 44, "HeaderDescription")</h2>
+                <p>@HtmlHelperForView.ViewHelper(Model, 44, "HeaderSubtitle")</p>
             </div>
         </div>
 

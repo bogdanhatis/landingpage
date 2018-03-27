@@ -18,40 +18,22 @@ namespace test.Controllers
             var ImportAll = new CMSManager().GetAll();
 
             var CMSViewModelList = new List<CMSViewModels>();
-            foreach(var CMS in ImportAll)
+            foreach(var item in ImportAll)
             {
-                var CMSViewModel = (CMSViewModels)CMS;
+                var CMSViewModel = (CMSViewModels)item;
+                CMSViewModel.CMSDetails = new List<CMSDetailsViewModels>();
                 CMSViewModelList.Add(CMSViewModel);
+                var detail = new CMSDetailsManager().GetByCMSId(item.Id);
+                if(detail.Count>0)
+                {
+                    
+                    foreach(var cmsDetail in detail)
+                    {
+                        var cms = (CMSDetailsViewModels)cmsDetail;
+                        CMSViewModel.CMSDetails.Add(cms);
+                    }
+                }
             }
-            
-
-            var screenshots = new Service.CMSDetailsManager().GetByCMSId(38);
-            var screenshotsDetailsVMList = new List<CMSDetailsViewModels>();
-            foreach(var screenshotsDetail in screenshots)
-            {
-                var screenshotsDetailVM = (CMSDetailsViewModels)screenshotsDetail;
-                screenshotsDetailsVMList.Add(screenshotsDetailVM);
-            }
-
-            var team = new Service.CMSDetailsManager().GetByCMSId(39);
-            var teamDetailsVMList = new List<CMSDetailsViewModels>();
-            foreach(var teamDetail in team)
-            {
-                var teamDetailVM = (CMSDetailsViewModels)teamDetail;
-                teamDetailsVMList.Add(teamDetailVM);
-            }
-
-            var reviews = new Service.CMSDetailsManager().GetByCMSId(40);
-            var reviewsDetails = new Service.CMSDetailsManager().GetByCMSId(40);
-            var listCMSDetailsVM = new List<CMSDetailsViewModels>();
-            foreach(var reviewDetail in reviewsDetails)
-            {
-                var reviewDetailViewModel = (CMSDetailsViewModels)reviewDetail;
-                listCMSDetailsVM.Add(reviewDetailViewModel);
-                
-            }
-
-
             return View(CMSViewModelList);
         }
 

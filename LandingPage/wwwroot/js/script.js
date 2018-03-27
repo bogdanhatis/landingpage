@@ -62,26 +62,26 @@ Version      : 1.0
 		  }
 		  autoPlayYouTubeModal();
 		
-		// Member Carousel
+		 //Member Carousel
 		jQuery("#member-carousel").owlCarousel({
-			loop:true,
+			//loop:true,
 			margin: 30,
 			nav: false,
 			dots: true,
 			smartSpeed:600,
 			autoplay: true,
-			responsiveClass: true,
-			responsive:{
-				0:{
-					items:1,
-				},
-				640:{
-					items:2,
-				},
-				992:{
-					items:3,
-				}
-			}
+			responsiveClass: true
+			//responsive:{
+			//	0:{
+			//		items:1,
+			//	},
+			//	640:{
+			//		items:2,
+			//	},
+			//	992:{
+			//		items:3,
+			//	}
+			//}
 		});
 		
 		// Animation section

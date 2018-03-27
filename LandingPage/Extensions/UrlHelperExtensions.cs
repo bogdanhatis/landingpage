@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using test.Controllers;
+using Microsoft.AspNetCore.Html;
 
 namespace Microsoft.AspNetCore.Mvc
 {
@@ -25,5 +26,7 @@ namespace Microsoft.AspNetCore.Mvc
                 values: new { userId, code },
                 protocol: scheme);
         }
+
+
     }
 }

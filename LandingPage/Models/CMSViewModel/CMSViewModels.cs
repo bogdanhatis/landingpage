@@ -28,9 +28,8 @@ namespace LandingPage.Models.CMSViewModels
         public String HtmlEditorId { get; set; }
 
 
-        public List<LandingPage.Models.CMSDetailsViewModels.CMSDetailsViewModels> ScreenshotsVMList;
-        public List<LandingPage.Models.CMSDetailsViewModels.CMSDetailsViewModels> TeamVMList;
-        public List<LandingPage.Models.CMSDetailsViewModels.CMSDetailsViewModels> ReviewsVMList;
+        public List<LandingPage.Models.CMSDetailsViewModels.CMSDetailsViewModels> CMSDetails;
+
 
         public static explicit operator CMSViewModels(CMS model)
         {
