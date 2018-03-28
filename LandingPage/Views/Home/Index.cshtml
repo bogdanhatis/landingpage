@@ -6,6 +6,8 @@
     var listCmsDetails = Model.Where(obj => obj.Id == 39).First().CMSDetails;
     var listReviews = Model.Where(obj => obj.Id == 40).First().CMSDetails;
 }
+<link href="~/css/semantic.min.css" rel="stylesheet" />
+
 
 <!--Preload-->
 <div class="preloader">
@@ -470,31 +472,32 @@
 
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-8 col-md-offset-2">
-                <form id="contactForm" class="contact-form wow fadeInLeft" data-toggle="validator" method="post">
+                <form id="contactForm" class="contact-form wow fadeInLeft ui form" data-toggle="validator" method="post">
                     <div class="row">
                         <div class="col-sm-12 col-sm-6">
-                            <div class="form-group">
-                                <input placeholder="First Name" id="fname" class="form-control" name="fname" type="text" required data-error="Please enter your first name">
+                            <div class="form-group field">
+                                <input placeholder="First Name" id="fname" class="form-control ui fname" name="fname" type="text" required data-error="Please enter your first name">
                                 <div class="help-block with-errors"></div>
                             </div>
                         </div>
                         <div class="col-sm-12 col-sm-6">
-                            <div class="form-group">
-                                <input placeholder="Last Name" id="lname" class="form-control" name="lname" type="text">
+                            <div class="form-group field">
+                                <input placeholder="Last Name" id="lname" class="form-control ui lname" name="lname" type="text">
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <input placeholder="Email Address" id="email" class="form-control" name="email" type="email" required data-error="Please enter your valid email address">
+                    <div class="form-group field">
+                        <input placeholder="Email Address" id="email" class="form-control ui email" name="email" type="email" required data-error="Please enter your valid email address">
                         <div class="help-block with-errors"></div>
                     </div>
 
-                    <div class="form-group">
-                        <textarea placeholder="Your Comments" id="message" cols="20" rows="8" class="form-control" required data-error="Please enter your comments"></textarea>
+                    <div class="form-group field">
+                        <textarea placeholder="Your Comments" name="message" id="message" cols="20" rows="8" class="form-control ui message" required data-error="Please enter your comments"></textarea>
                         <div class="help-block with-errors"></div>
                     </div>
-                    <div id="ContactMessageId" > </div>
-                    <input onclick="submitContactForm()" value="Submit" name="submit" class="btn btn-primary">
+                    <div id="ContactMessageId"> </div>
+                    <div class="ui error message"></div>
+                    <input onclick="submitContactForm()" value="Submit" name="submit" class="btn btn-primary ui submit button">
                     <div id="msgSubmit" class="h3 text-center hidden"></div>
                 </form>
             </div>
@@ -564,6 +567,59 @@
 </script>
 
 <script>
+    $(document).ready(function () {
+        //$('.error').hide();
+        $('#contactForm')
+            .form({
+                on: 'blur',
+                fields: {
+
+                    fname: {
+                        identifier: 'fname',
+                        rules: [
+                            {
+                                type: 'empty',
+                                prompt: 'Please enter a firstname'
+                            }
+                        ]
+                    },
+                    lname: {
+                        identifier: 'lname',
+                        rules: [
+                            {
+                                type: 'empty',
+                                prompt: 'Please enter a lastname'
+                            }
+                        ]
+                    },
+                    email: {
+                        identifier: 'email',
+                        rules: [
+                            {
+                                type: 'empty',
+                                prompt: 'Please enter an email'
+                            }
+                        ]
+
+                    },
+                    message: {
+                        identifier: 'message',
+                        rules: [
+                            {
+                                type: 'empty',
+                                prompt: 'Please enter a message'
+                            }
+                        ]
+
+                    }
+
+
+                }
+            });
+            
+    });
+   
+
     function createUser() {
         var data = $('#newsletterUser').val();
         $.ajax({
@@ -595,27 +651,37 @@
         var lname = $('#lname').val();
         var email = $('#email').val();
         var message = $('#message').val();
-        $.ajax({
-            type: "POST",
-            url: '/Home/ContactForm',
-            data: {
-                fname: fname,
-                lname: lname,
-                email: email,
-                message: message
-            },dataType:'Json',
-        }).success(function (data) {
-            if (data == false) {
-                document.getElementById("ContactMessageId").innerHTML = "Mesajul dumneavoastra nu s-a putut transmite. Va rugam reincercati.";
+        if (fname == "" || lname == "" || email == "" || message == "") {
 
-            }
-            else {
-                document.getElementById("ContactMessageId").innerHTML = "Mesajul dumneavoastra a fost transmis cu succes. Multumim!";
+            document.getElementById("ContactMessageId").innerHTML = "Va rugam completati toate campurile.";
+        }
+        else {
 
-            }
-        })
+            $.ajax({
+                type: "POST",
+                url: '/Home/ContactForm',
+                data: {
+                    fname: fname,
+                    lname: lname,
+                    email: email,
+                    message: message
+                }, dataType: 'Json',
+            }).success(function (data) {
+                if (data == false) {
+                    document.getElementById("ContactMessageId").innerHTML = "Mesajul dumneavoastra nu s-a putut transmite. Va rugam reincercati.";
+
+                }
+                else {
+                    document.getElementById("ContactMessageId").innerHTML = "Mesajul dumneavoastra a fost transmis cu succes. Multumim!";
+
+                }
+            })
+        }
 
 
     }
 
 </script>
+@section Scripts{
+    <script src="~/js/semantic.min.js"></script>
+}
