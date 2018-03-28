@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using DBModels;
 using LandingPage.Models.CMSDetailsViewModels;
 using LandingPage.Models.CMSViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -14,20 +15,20 @@ namespace test.Controllers
     public class HomeController : Controller
     {
         public IActionResult Index()
-        {           
+        {
             var ImportAll = new CMSManager().GetAll();
 
             var CMSViewModelList = new List<CMSViewModels>();
-            foreach(var item in ImportAll)
+            foreach (var item in ImportAll)
             {
                 var CMSViewModel = (CMSViewModels)item;
                 CMSViewModel.CMSDetails = new List<CMSDetailsViewModels>();
                 CMSViewModelList.Add(CMSViewModel);
                 var detail = new CMSDetailsManager().GetByCMSId(item.Id);
-                if(detail.Count>0)
+                if (detail.Count > 0)
                 {
-                    
-                    foreach(var cmsDetail in detail)
+
+                    foreach (var cmsDetail in detail)
                     {
                         var cms = (CMSDetailsViewModels)cmsDetail;
                         CMSViewModel.CMSDetails.Add(cms);
@@ -43,12 +44,22 @@ namespace test.Controllers
 
             return View();
         }
-
-        public IActionResult Contact()
+        [HttpPost]
+        public JsonResult ContactForm(string fname, string lname, string email, string message)
         {
-            ViewData["Message"] = "Your contact page.";
+            try
+            {
+                var _contactFormManager = new ContactFormManager();
+                var modelContactForm = new ContactForm();
+                modelContactForm.FirstName = fname;
+                modelContactForm.LastName = lname;
+                modelContactForm.EmailAddress = email;
+                modelContactForm.Message = message;
+                var createId = _contactFormManager.Create(modelContactForm);
+                return Json(true);
 
-            return View();
+            }
+            catch { return Json(false); };
         }
 
         public IActionResult Error()

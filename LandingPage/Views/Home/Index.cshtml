@@ -377,12 +377,18 @@
                     <p>@HtmlHelperForView.ViewHelper(Model, 36, "Subscribe HeaderSubtitle")</p>
                     <form action="#" method="post">
                         <div class="input-group">
-                            <input type="email" class="form-control" placeholder="Enter your email" id="newsletterUser"/>
-                            <span class="input-group-addon">
-                                <input type="submit" class="btn btn-primary" value="subscribe" onclick="createUser()">
-                            </span>
-                        </div>
 
+                            <input type="email" class="form-control" placeholder="Enter your email" id="newsletterUser" />
+                            <span class="input-group-addon">
+
+                                <input class="btn btn-primary" value="subscribe" onclick="createUser()">
+
+                            </span>
+
+                        </div>
+                        <div id="ReturnedMessageId">
+
+                        </div>
                     </form>
                 </div>
             </div>
@@ -487,7 +493,8 @@
                         <textarea placeholder="Your Comments" id="message" cols="20" rows="8" class="form-control" required data-error="Please enter your comments"></textarea>
                         <div class="help-block with-errors"></div>
                     </div>
-                    <input value="Submit" name="submit" class="btn btn-primary" type="submit">
+                    <div id="ContactMessageId" > </div>
+                    <input onclick="submitContactForm()" value="Submit" name="submit" class="btn btn-primary">
                     <div id="msgSubmit" class="h3 text-center hidden"></div>
                 </form>
             </div>
@@ -559,15 +566,56 @@
 <script>
     function createUser() {
         var data = $('#newsletterUser').val();
-            $.ajax({
+        $.ajax({
             url: '/admin/NewsletterUsers/Create',
-            data: { Email: data}
-            }).success(function (response) {
-            if (response == true) {
-            $('#datatable').DataTable().ajax.reload();
+            data: { Email: data }
+        }).success(function (response) {
+            /* if (response == true) {
+             $('#datatable').DataTable().ajax.reload();
+             }
+             else { alert("Email deja exista");}
+             })*/
+
+            if (response == false) {
+                document.getElementById("ReturnedMessageId").innerHTML = "Subscriptie deja existenta pentru acest email!";
+
             }
-            else { alert("Email deja exista");}
-            })
+            else {
+                document.getElementById("ReturnedMessageId").innerHTML = "Felicitari, v-ati abonat cu succes!";
+
+            }
+        })
+
+
 
     }
+
+    function submitContactForm() {
+        var fname = $('#fname').val();
+        var lname = $('#lname').val();
+        var email = $('#email').val();
+        var message = $('#message').val();
+        $.ajax({
+            type: "POST",
+            url: '/Home/ContactForm',
+            data: {
+                fname: fname,
+                lname: lname,
+                email: email,
+                message: message
+            },dataType:'Json',
+        }).success(function (data) {
+            if (data == false) {
+                document.getElementById("ContactMessageId").innerHTML = "Mesajul dumneavoastra nu s-a putut transmite. Va rugam reincercati.";
+
+            }
+            else {
+                document.getElementById("ContactMessageId").innerHTML = "Mesajul dumneavoastra a fost transmis cu succes. Multumim!";
+
+            }
+        })
+
+
+    }
+
 </script>
