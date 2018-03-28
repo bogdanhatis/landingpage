@@ -113,24 +113,6 @@ Version      : 1.0
 		});
 		
 		// Google Map
-		function initialize() {
-		  var mapOptions = {
-			zoom: 10,
-			scrollwheel: false,
-			center: new google.maps.LatLng(40.7127837, -74.00594130000002),
-			styles: [{"featureType": "administrative", "elementType": "labels.text.fill", "stylers": [{"color": "#444444"}]}, {"featureType": "administrative.locality", "elementType": "labels.text.stroke", "stylers": [{"visibility": "on"}]}, {"featureType": "administrative.locality", "elementType": "labels.icon", "stylers": [{"visibility": "on"}, {"color": "#f1c40f"}]}, {"featureType": "landscape", "elementType": "all", "stylers": [{"color": "#f2f2f2"}]}, {"featureType": "poi", "elementType": "all", "stylers": [{"visibility": "off"}]}, {"featureType": "road", "elementType": "all", "stylers": [{"saturation": -100}, {"lightness": 45}]}, {"featureType": "road.highway", "elementType": "all", "stylers": [{"visibility": "simplified"}]}, {"featureType": "road.arterial", "elementType": "labels.icon", "stylers": [{"visibility": "off"}]}, {"featureType": "transit", "elementType": "all", "stylers": [{"visibility": "off"}]}, {"featureType": "water", "elementType": "all", "stylers": [{"color": "#9e9e9e"}, {"visibility": "on"}]}]
-		  };
-
-		  var map = new google.maps.Map(document.getElementById('map'),
-			  mapOptions);
-		  var marker = new google.maps.Marker({
-			position: map.getCenter(),
-			animation:google.maps.Animation.BOUNCE,
-			icon: 'img/map-marker.png',
-			map: map
-		  });
-		}
-		google.maps.event.addDomListener(window, 'load', initialize);
 	});
 	
 	jQuery(window).on('scroll', function() {

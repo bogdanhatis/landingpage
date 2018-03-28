@@ -113,9 +113,16 @@ namespace LandingPage.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 if (item.Id > 0)
+                {
+                    if (string.IsNullOrWhiteSpace(item.Content))
+                    {
+                        var oldItem = new CMSManager().GetById(item.Id);
+                        item.Content = oldItem.Content;
+                    }
                     new CMSManager().Update(new CMSViewModels().Transform(item));
-                else
-                    new CMSManager().Create(new CMSViewModels().Transform(item));
+                }
+            else
+                new CMSManager().Create(new CMSViewModels().Transform(item));
 
                 return RedirectToAction("Index");
             }

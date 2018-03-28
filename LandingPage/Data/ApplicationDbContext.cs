@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using test.Models;
+using DBModels;
+using LandingPage.Models.NewsletterUsersViewModels;
 
 namespace test.Data
 {
@@ -22,5 +24,9 @@ namespace test.Data
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
         }
+
+        public DbSet<DBModels.NewsletterUsers> NewsletterUsers { get; set; }
+
+        public DbSet<LandingPage.Models.NewsletterUsersViewModels.NewsletterUsersViewModels> NewsletterUsersViewModels { get; set; }
     }
 }
