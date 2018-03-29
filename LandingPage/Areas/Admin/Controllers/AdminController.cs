@@ -9,7 +9,7 @@ using Service;
 namespace LandingPage.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Route("admin/admin")]
+    [Route("admin")]
     [Authorize]
     public class AdminController : Controller
     {

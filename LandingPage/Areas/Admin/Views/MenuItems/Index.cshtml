@@ -71,7 +71,7 @@
 
      function deleteItem(data) {
         $.ajax({
-            url: '@Url.Action("DeleteItem","MenuItem")',
+            url: '@Url.Action("DeleteItem","ContactForm")',
             data: { ItemId: data}
         }).success(function (response) {
             if (response == true) {

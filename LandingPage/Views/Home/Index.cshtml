@@ -8,7 +8,9 @@
 }
 <link href="~/css/semantic.min.css" rel="stylesheet" />
 
-
+<head>
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+</head>
 <!--Preload-->
 <div class="preloader">
     <div class="preloader_image">
@@ -377,20 +379,18 @@
                 <div class="subscribe-content text-center">
                     <h2>@HtmlHelperForView.ViewHelper(Model, 36, "Subscribe HeaderDescription")</h2>
                     <p>@HtmlHelperForView.ViewHelper(Model, 36, "Subscribe HeaderSubtitle")</p>
-                    <form action="#" method="post">
-                        <div class="input-group">
+                    <form action="#" method="post" id="newsletterForm">
+                        <div class="input-group">                             
+                                <input type="email" class="form-control ui email" id="newsletterUser" placeholder="Email Address" required data-error="Please enter your valid email address" name="newsletterUser" />
+                                <div class="help-block with-errors"></div>                           
+                                <span class="input-group-addon">
+                                    @*<input placeholder="Email Address" id="email" class="form-control ui email" name="email" type="email" required data-error="Please enter your valid email address">*@
+                                    <input class="btn btn-primary" value="subscribe" onclick="createUser()">
 
-                            <input type="email" class="form-control" placeholder="Enter your email" id="newsletterUser" />
-                            <span class="input-group-addon">
+                                </span>
 
-                                <input class="btn btn-primary" value="subscribe" onclick="createUser()">
-
-                            </span>
-
-                        </div>
-                        <div id="ReturnedMessageId">
-
-                        </div>
+                            </div>
+                        <div id="NewsletterMessageId"> </div>
                     </form>
                 </div>
             </div>
@@ -497,6 +497,7 @@
                     </div>
                     <div id="ContactMessageId"> </div>
                     <div class="ui error message"></div>
+                    <div class="g-recaptcha" data-sitekey="6LegpE8UAAAAAO6EVYYzl1KOnHdwm2Xwq4dUKHCW" id="g-recaptcha"></div>
                     <input onclick="submitContactForm()" value="Submit" name="submit" class="btn btn-primary ui submit button">
                     <div id="msgSubmit" class="h3 text-center hidden"></div>
                 </form>
@@ -559,7 +560,7 @@
         var marker = new google.maps.Marker({
             position: map.getCenter(),
             animation: google.maps.Animation.BOUNCE,
-            icon: 'img/map-marker.png',
+            icon: '/img/map-marker.png',
             map: map
         });
     }
@@ -579,7 +580,7 @@
                         rules: [
                             {
                                 type: 'empty',
-                                prompt: 'Please enter a firstname'
+                                prompt: '@HtmlHelperForView.ViewHelper(Model, 44, "ValidareFName")'
                             }
                         ]
                     },
@@ -588,7 +589,7 @@
                         rules: [
                             {
                                 type: 'empty',
-                                prompt: 'Please enter a lastname'
+                                prompt: '@HtmlHelperForView.ViewHelper(Model, 44, "ValidareLName")'
                             }
                         ]
                     },
@@ -597,7 +598,7 @@
                         rules: [
                             {
                                 type: 'empty',
-                                prompt: 'Please enter an email'
+                                prompt: '@HtmlHelperForView.ViewHelper(Model, 44, "ValidareEmail")'
                             }
                         ]
 
@@ -607,7 +608,7 @@
                         rules: [
                             {
                                 type: 'empty',
-                                prompt: 'Please enter a message'
+                                prompt: '@HtmlHelperForView.ViewHelper(Model, 44, "ValidareMessage")'
                             }
                         ]
 
@@ -622,28 +623,19 @@
 
     function createUser() {
         var data = $('#newsletterUser').val();
+        if (data == "") {
+            document.getElementById("NewsletterMessageId").innerHTML = "@HtmlHelperForView.ViewHelper(Model, 44, "ValidareToateCampuri")";
+        }
         $.ajax({
             url: '/admin/NewsletterUsers/Create',
-            data: { Email: data }
+            data: {
+                Email: data
+            }
         }).success(function (response) {
-            /* if (response == true) {
-             $('#datatable').DataTable().ajax.reload();
-             }
-             else { alert("Email deja exista");}
-             })*/
-
-            if (response == false) {
-                document.getElementById("ReturnedMessageId").innerHTML = "Subscriptie deja existenta pentru acest email!";
-
-            }
-            else {
-                document.getElementById("ReturnedMessageId").innerHTML = "Felicitari, v-ati abonat cu succes!";
-
-            }
+            document.getElementById("NewsletterMessageId").innerHTML = response.message;
+            if (response.success == true)
+                $('#newsletterUser').val('');
         })
-
-
-
     }
 
     function submitContactForm() {
@@ -651,12 +643,16 @@
         var lname = $('#lname').val();
         var email = $('#email').val();
         var message = $('#message').val();
-        if (fname == "" || lname == "" || email == "" || message == "") {
+        var valid = $('#g-recaptcha-response').val();
+        if (valid == "") {
 
-            document.getElementById("ContactMessageId").innerHTML = "Va rugam completati toate campurile.";
+            document.getElementById("ContactMessageId").innerHTML = "please check";
+        }
+        else  
+        if (fname == "" || lname == "" || email == "" || message == "") {
+            document.getElementById("ContactMessageId").innerHTML = "@HtmlHelperForView.ViewHelper(Model, 44, "ValidareToateCampuri")";
         }
         else {
-
             $.ajax({
                 type: "POST",
                 url: '/Home/ContactForm',
@@ -664,17 +660,21 @@
                     fname: fname,
                     lname: lname,
                     email: email,
-                    message: message
+                    message: message,
+                    recaptcha: valid
                 }, dataType: 'Json',
             }).success(function (data) {
-                if (data == false) {
-                    document.getElementById("ContactMessageId").innerHTML = "Mesajul dumneavoastra nu s-a putut transmite. Va rugam reincercati.";
+                document.getElementById("ContactMessageId").innerHTML = data.message;
+                grecaptcha.reset();
+                if (data.success == true) {
+                    $('#fname').val('');
+                    $('#lname').val('');
+                    $('#email').val('');
+                    $('#message').val('');
+
 
                 }
-                else {
-                    document.getElementById("ContactMessageId").innerHTML = "Mesajul dumneavoastra a fost transmis cu succes. Multumim!";
-
-                }
+                
             })
         }
 

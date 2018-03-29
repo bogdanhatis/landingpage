@@ -1,13 +1,12 @@
-﻿using DBModels;
-using test.Models.MenuItemViewModels;
+﻿using test.Models.MenuItemViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Service;
-using System;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace test.Areas.Admin.Controllers
 {
     [Area("admin")]
+    [Authorize]
     public class MenuItemsController : Controller
     {
         [Route("admin/menuitem/getall")]

@@ -11,10 +11,12 @@ using Microsoft.AspNetCore.Http;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using test;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LandingPage.Areas.Admin.Controllers
 {
     [Area("admin")]
+    [Authorize]
     public class CMSController : Controller
     {
         private IHostingEnvironment _hostingEnvironment;

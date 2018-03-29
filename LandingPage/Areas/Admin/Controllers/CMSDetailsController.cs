@@ -1,20 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using DBModels;
 using LandingPage.Models.CMSDetailsViewModels;
 using Service;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Http;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
-using test;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LandingPage.Areas.Admin.Controllers
 {
     [Area("admin")]
+    [Authorize]
     public class CMSDetailsController : Controller
     {
         private IHostingEnvironment _hostingEnvironment;

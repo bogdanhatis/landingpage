@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using LandingPage.Models.HtmlTypesViewModels;
+﻿using LandingPage.Models.HtmlTypesViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Service;
 
 namespace LandingPage.Areas.Admin.Controllers
 {
     [Area("admin")]
+    [Authorize]
     public class HtmlTypesController : Controller
     {   [Route("admin/HtmlTypes/getall")]
         public JsonResult GetAll()

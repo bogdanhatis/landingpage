@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using LandingPage.Models.NewsletterUsersViewModels;
 using Service;
+using System.Text.RegularExpressions;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LandingPage.Areas.Admin.Controllers
 {
@@ -12,6 +14,7 @@ namespace LandingPage.Areas.Admin.Controllers
     public class NewsletterUsersController : Controller
     {
         [Route("admin/NewsletterUsers/getall")]
+        [Authorize]
         public JsonResult GetAll()
         {
             var _repo = new NewsletterUsersManager();
@@ -19,6 +22,7 @@ namespace LandingPage.Areas.Admin.Controllers
         }
 
         [Route("admin/NewsletterUsers/deleteUser")]
+        [Authorize]
         public JsonResult Delete(int id)
         {
             var _repo = new NewsletterUsersManager();
@@ -35,18 +39,23 @@ namespace LandingPage.Areas.Admin.Controllers
         {
             var _repo = new NewsletterUsersManager();
             var user = _repo.GetByEmail(email);
-            if(user!=null)
+            string emailPattern = @"^(([\w-]+\.)+[\w-]+|([a-zA-Z]{1}|[\w-]{2,}))@";
+            if(user != null)
             {
-                return Json(false);
+                return Json(new { success = false, message = "Subscriptie deja existenta pentru acest email" });
+            }
+            else
+            if (email == null || !Regex.IsMatch(email, emailPattern))
+            {
+                return Json(new { success = false, message = "Email invalid" });
             }
             else
             {
-                var date = new DateTime();
                 _repo.Create(email, DateTime.Now,Request.HttpContext.Connection.RemoteIpAddress.ToString());
-                return Json(true);
+                return Json(new { success = true, message = "V-ati abonat cu succes la newsletter" });
             }
         }
-
+        [Authorize]
         public IActionResult Index()
         {
             return View();

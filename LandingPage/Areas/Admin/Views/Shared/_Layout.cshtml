@@ -36,7 +36,7 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-
+    
 </head>
 
 <body id="page-top">
@@ -62,8 +62,7 @@
                     <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="navbar-collapse collapse" id="navbar">
                         <ul class="nav navbar-nav navbar-right">
-                            <li><a href="/"><span>Home</span></a></li>
-                            <li><a href="@Url.Action("Index", "Users")"><span>Users</span></a></li>
+                            <li><a href="@Url.Action("Index", "Admin")"><span>Home</span></a></li>
                             <li>@{Html.RenderPartial("_LoginPartial"); }</li>
 
                         </ul>
