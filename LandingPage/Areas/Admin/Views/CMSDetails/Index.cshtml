@@ -44,7 +44,7 @@
 
     function reload() {
         $('#datatable').DataTable({
-            ajax: "@Url.Action("GetAll","CMSDetails")",
+            ajax: "@Url.Action("GetAll","CMSDetails",new { cmsId = ViewBag.cmsId })",
             columns: [
                 { data: "id" },
                 {data: "cmsId"},

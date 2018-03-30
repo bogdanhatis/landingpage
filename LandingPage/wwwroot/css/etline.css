@@ -146,9 +146,6 @@ you can use the generic selector below, but it's slower:
 .icon-shield:before {
 	content: "\e022";
 }
-.icon-trophy:before {
-	content: "\e023";
-}
 .icon-flag:before {
 	content: "\e024";
 }
@@ -238,11 +235,6 @@ you can use the generic selector below, but it's slower:
 .icon-bike:before {
 	content: "\e042";
 }
-.icon-wine:before {
-	content: "\e043";
-}
-
-
 .icon-genius:before {
 	content: "\e046";
 }
@@ -257,12 +249,7 @@ you can use the generic selector below, but it's slower:
 .icon-upload:before {
 	content: "\e04c";
 }
-.icon-download:before {
-	content: "\e04d";
-}
-.icon-target:before {
-	content: "\e04e";
-}
+
 .icon-hazardous:before {
 	content: "\e04f";
 }
@@ -297,20 +284,8 @@ you can use the generic selector below, but it's slower:
 .icon-refresh:before {
 	content: "\e05a";
 }
-.icon-happy:before {
-	content: "\e05b";
-}
 .icon-sad:before {
 	content: "\e05c";
-}
-.icon-facebook:before {
-	content: "\e05d";
-}
-.icon-twitter:before {
-	content: "\e05e";
-}
-.icon-googleplus:before {
-	content: "\e05f";
 }
 .icon-rss:before {
 	content: "\e060";
@@ -318,9 +293,7 @@ you can use the generic selector below, but it's slower:
 .icon-tumblr:before {
 	content: "\e061";
 }
-.icon-linkedin:before {
-	content: "\e062";
-}
+
 .icon-dribbble:before {
 	content: "\e063";
 }

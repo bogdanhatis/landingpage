@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Authorization;
+using System.Collections.Generic;
 
 namespace LandingPage.Areas.Admin.Controllers
 {
@@ -22,15 +23,28 @@ namespace LandingPage.Areas.Admin.Controllers
         }
 
         [Route("admin/cmsdetails/getall")]
-        public JsonResult GetAll()
+        public JsonResult GetAll(int cmsId)
         {
-            var all = new CMSDetailsManager().GetAll();
+            var all = new List<DBModels.CMSDetails>();
+            if (cmsId == 0)
+            { all = new CMSDetailsManager().GetAll(); }
+            else
+            {
+                all = new CMSDetailsManager().GetByCMSId(cmsId);
+            }
             return Json(new { data = all });
         }
         [Route("admin/cmsdetails")]
-        public IActionResult Index()
+        public IActionResult Index(int cmsId)
         {
-            var all = new CMSDetailsManager().GetAll();
+            var all = new List<DBModels.CMSDetails>();
+            if (cmsId == 0)
+            {  all = new CMSDetailsManager().GetAll(); }
+            else
+            {
+                all = new CMSDetailsManager().GetByCMSId(cmsId);
+            }
+            ViewBag.cmsId = cmsId;
             return View(all);
         }
 

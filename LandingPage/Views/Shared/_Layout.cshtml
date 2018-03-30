@@ -1,4 +1,5 @@
-﻿@{ 
+﻿@using LandingPage.Extensions
+@{
     var _menuItemRepo = new Service.MenuItemManager();
     var items = _menuItemRepo.GetAllSortedAndVisible();
 
@@ -61,7 +62,7 @@
                             </span><!--end line button-->
                         </button>
                         <div class="logo">
-                            <a href="/home/index"><img src="~/img/365ERP.png" alt="Logo"></a>
+                            <a href="/"><img src="~/img/365ERP.png" alt="Logo"></a>
                         </div>
                     </div>
 
@@ -70,10 +71,10 @@
                         <ul class="nav navbar-nav navbar-right">
                             @foreach (var x in items)
                             {
-                                var y = "/home/index" + @x.Section;
+                                var y = @x.Section;
                                 <li><a href="@y"><span>@x.Name</span></a></li>
                             }
-                            <li><a asp-area="" asp-controller="Admin" asp-action="Index"><span>Log in</span></a></li>
+
 
                         </ul>
                     </div>
@@ -94,10 +95,10 @@
             <div class="row">
                 <div class="col-xs-12">
                     <ul class="social-media">
-                        <li><a href="#"><i class="icon-facebook"></i></a></li>
-                        <li><a href="#"><i class="icon-twitter"></i></a></li>
-                        <li><a href="#"><i class="icon-linkedin"></i></a></li>
-                        <li><a href="#"><i class="icon-googleplus"></i></a></li>
+                        <li><a href="@HtmlHelperForView.ViewHelper(Model,44,"FacebookLink") "target="_blank"> <i class="icon-facebook"><img src="@HtmlHelperForView.ViewHelper(Model, 44,"FacebookIcon")" /></i></a></li>
+                        <li><a href="@HtmlHelperForView.ViewHelper(Model,44,"TwitterLink")" target="_blank"><i class="icon-twitter"><img src="@HtmlHelperForView.ViewHelper(Model, 44,"TwitterIcon")"/></i></a></li>
+                        <li><a href="@HtmlHelperForView.ViewHelper(Model,44,"LinkedInLink")" target="_blank"><i class="icon-linkedin"><img src="@HtmlHelperForView.ViewHelper(Model, 44,"LinkedInIcon")"/></i></a></li>
+                        <li><a href="@HtmlHelperForView.ViewHelper(Model,44,"GooglePlusLink")" target="_blank"><i class="icon-googleplus"><img src="@HtmlHelperForView.ViewHelper(Model, 44,"GooglePlusIcon")"/></i></a></li>
                     </ul>
                 </div>1
                 <div class="col-xs-12">

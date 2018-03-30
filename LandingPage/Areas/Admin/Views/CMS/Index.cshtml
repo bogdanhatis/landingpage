@@ -87,7 +87,7 @@
         $('#datatable tbody').on('dblclick', 'tr', function () {
             var data = table.row(this).data();
             console.log(data.id);
-            window.location = "/admin/cmsdetails";
+            window.location = "/admin/cmsdetails?cmsId=" + data.id;
         });
     });
 
