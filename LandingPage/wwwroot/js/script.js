@@ -38,7 +38,7 @@ Version      : 1.0
 		jQuery('#home').parallax("50%", 0.2);
 		jQuery('#fun-facts').parallax("50%", 0.2);
 		jQuery('#downloads').parallax("50%", 0.2);
-		jQuery('#video').parallax("50%", 0.2);
+		//jQuery('#video').parallax("50%", 0.2);
 		jQuery('#subscription').parallax("50%", 0.2);
 		
 		// Video Bg
@@ -48,8 +48,8 @@ Version      : 1.0
 		function autoPlayYouTubeModal() {
 			var trigger = $("body").find('[data-toggle="modal"]');
 			trigger.on("click",function() {
-			  var theModal = $(this).data("target"),
-				videoSRC = $('#video-modal iframe').attr('src'),
+                var theModal = $(this).data("target"),
+                    videoSRC = $(theModal + ' iframe').attr('src'),
 				videoSRCauto = videoSRC + "?autoplay=1";
 			  $(theModal + ' iframe').attr('src', videoSRCauto);
 			  $(theModal + ' button.close').on("click",function() {

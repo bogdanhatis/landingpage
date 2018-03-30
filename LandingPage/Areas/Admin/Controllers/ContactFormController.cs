@@ -29,8 +29,6 @@ namespace LandingPage.Areas.Admin.Controllers
             return View(all);
         }
 
-
-
         [Route("admin/contactform/deleteItem")]
         public JsonResult DeleteItem(int ItemId)
         {

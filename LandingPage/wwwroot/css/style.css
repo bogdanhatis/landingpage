@@ -1111,6 +1111,10 @@ iframe {
 	padding:50px 0;
 	margin-top:50px;
 }
+#video-carousel .item {
+    padding: 50px 0;
+    margin-top: 50px;
+}
 .tesimonial-text{
 	width:100%;
 	height:auto;
@@ -1143,7 +1147,10 @@ iframe {
 #testimonials-carousel .carousel-indicators {
     bottom: 25px;
 }
-.carousel-indicators .active{
+#video-carousel .carousel-indicators {
+    bottom: 25px;
+}
+.video-carousel-indicators .active{
 	width:40px;
 }
 
