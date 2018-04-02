@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using test.Models;
 using DBModels;
 using LandingPage.Models.NewsletterUsersViewModels;
+using LandingPage.Models.ScriptsViewModels;
 
 namespace test.Data
 {
@@ -28,5 +29,9 @@ namespace test.Data
         public DbSet<DBModels.NewsletterUsers> NewsletterUsers { get; set; }
 
         public DbSet<LandingPage.Models.NewsletterUsersViewModels.NewsletterUsersViewModels> NewsletterUsersViewModels { get; set; }
+
+        public DbSet<DBModels.Scripts> Scripts { get; set; }
+
+        public DbSet<LandingPage.Models.ScriptsViewModels.ScriptsViewModels> ScriptsViewModels { get; set; }
     }
 }

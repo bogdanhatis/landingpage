@@ -5,7 +5,7 @@
 
 <h2 class="page-title">Index</h2>
 
-<a href="@Url.Action("Create","CMSDetails")"> Adauga item </a>
+<a href="@Url.Action("Create","Scripts")"> Adauga item </a>
 
 <link href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
 <div class="datatable">
@@ -13,11 +13,10 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>CMSId</th>
                 <th>Name</th>
-                <th>OrderIndex</th>
-                <th>HtmlTypeId</th>
-                <th>Content</th>
+                <th>Script</th>
+                <th>Header</th>
+                <th>Footer</th>
                 <th>Delete</th>
                 <th>Edit</th>
             </tr>
@@ -25,11 +24,10 @@
         <tbody>
             <tr>
                 <th>Id</th>
-                <th>CMSId</th>
                 <th>Name</th>
-                <th>OrderIndex</th>
-                <th>HtmlTypeId</th>
-                <th>Content</th>
+                <th>Script</th>
+                <th>Header</th>
+                <th>Footer</th>
                 <th>Delete</th>
                 <th>Edit</th>
             </tr>
@@ -43,24 +41,22 @@
 
     function reload() {
         $('#datatable').DataTable({
-            ajax: "@Url.Action("GetAll","CMSDetails",new { cmsId = ViewBag.cmsId })",
+            ajax: "@Url.Action("GetAll","Scripts")",
             columns: [
                 { data: "id" },
-                {data: "cmsId"},
                 { data: "name" },
-                { data: "orderIndex" },
-                { data: "htmlTypeId" },
-                { data: "content"},
+                { data: "script" },
+                { data: "header" },
+                { data: "footer"},
                 {
                     data: "id", render: function (data, type, row, meta) {
                         data = '<input value="Stergere" type="Button" onclick="deleteItem(\'' + data + '\')" />';
-
                         return data;
                     }
                 },
                 {
                     data: "id", render: function (data, type, row, meta) {
-                        var link = '/admin/cmsdetails/createItem?id=' + data;
+                        var link = '/admin/scripts/createScript?id=' + data;
                         data = '<a href="' + link + '">Edit</a>';
                         return data;
                     }
@@ -71,8 +67,8 @@
 
      function deleteItem(data) {
         $.ajax({
-            url: '@Url.Action("DeleteItem","CMSDetails")',
-            data: { ItemId: data}
+            url: '@Url.Action("deleteScript","Scripts")',
+            data: { Id: data}
         }).success(function (response) {
             if (response == true) {
                 $('#datatable').DataTable().ajax.reload();
@@ -86,7 +82,6 @@
     $(document).ready(function () {
         reload();
     });
-
-
-
 </script>
+
+
