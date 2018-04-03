@@ -470,35 +470,40 @@
         </div>
 
         <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-8 col-md-offset-2">
+            <div class="col-xs-12 col-sm-12 col-md-8 col-md-offset-2 ">
                 <form id="contactForm" class="contact-form wow fadeInLeft ui form" data-toggle="validator" method="post">
                     <div class="row">
                         <div class="col-sm-12 col-sm-6">
-                            <div class="form-group field">
-                                <input placeholder="First Name" id="fname" class="form-control ui fname" name="fname" type="text" required data-error="Please enter your first name">
+                            <div class="form-group">
+                                <input placeholder="First Name" id="fname" class="form-control ui fname " name="fname" type="text" required data-error="Please enter your first name">
                                 <div class="help-block with-errors"></div>
                             </div>
                         </div>
                         <div class="col-sm-12 col-sm-6">
-                            <div class="form-group field">
-                                <input placeholder="Last Name" id="lname" class="form-control ui lname" name="lname" type="text">
+                            <div class="form-group">
+                                <input placeholder="Last Name" id="lname" class="form-control ui lname" name="lname" type="text" required data-error="Please enter your last name">
                             </div>
                         </div>
                     </div>
-                    <div class="form-group field">
+                    <div class="form-group ">
                         <input placeholder="Email Address" id="email" class="form-control ui email" name="email" type="email" required data-error="Please enter your valid email address">
                         <div class="help-block with-errors"></div>
                     </div>
 
-                    <div class="form-group field">
+                    <div class="form-group">
                         <textarea placeholder="Your Comments" name="message" id="message" cols="20" rows="8" class="form-control ui message" required data-error="Please enter your comments"></textarea>
                         <div class="help-block with-errors"></div>
                     </div>
-                    <div id="ContactMessageId"> </div>
-                    <div class="ui error message"></div>
-                    <div class="g-recaptcha" data-sitekey="6LegpE8UAAAAAO6EVYYzl1KOnHdwm2Xwq4dUKHCW" id="g-recaptcha"></div>
-                    <input onclick="submitContactForm()" value="Submit" name="submit" class="btn btn-primary ui submit button">
-                    <div id="msgSubmit" class="h3 text-center hidden"></div>
+                    <div class="ui error message err-msg">
+                        <div id="ContactMessageId"></div>
+                    </div>
+                    <div class="captcha">
+                        <div class="g-recaptcha" data-sitekey="6LegpE8UAAAAAO6EVYYzl1KOnHdwm2Xwq4dUKHCW" id="g-recaptcha"></div>
+                        <div class="col-2">
+                            <button onclick="submitContactForm()" value="Submit" name="submit" class="btn btn-primary ui submit button">Submit</button>
+                            <div id="msgSubmit" class="h3 text-center hidden"></div>
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>
@@ -648,12 +653,17 @@
         var message = $('#message').val();
         var valid = $('#g-recaptcha-response').val();
         if (valid == "") {
-
-            document.getElementById("ContactMessageId").innerHTML = "please check";
+            document.getElementById('ContactMessageId').innerHTML = 'validateCaptcha';
         }
         else
         if (fname == "" || lname == "" || email == "" || message == "") {
             document.getElementById("ContactMessageId").innerHTML = "@HtmlHelperForView.ViewHelper(Model, 44, "ValidareToateCampuri")";
+            $('#errheader').val('Please check');
+            $('#fname').addClass('field error');
+            $('#lname').addClass('field error');
+            $('#email').addClass('field error');
+            $('#message').addClass('field error');
+            $('#contactForm').addClass('error');
         }
         else {
             $.ajax({
