@@ -16,7 +16,7 @@ using test.Services;
 
 namespace test.Controllers
 {
-    [Authorize]
+   
     [Route("[controller]/[action]")]
     public class AccountController : Controller
     {
@@ -206,7 +206,7 @@ namespace test.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+        
         public IActionResult Register(string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
@@ -214,7 +214,7 @@ namespace test.Controllers
         }
 
         [HttpPost]
-        [Authorize]
+        
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel model, string returnUrl = null)
         {
@@ -233,7 +233,7 @@ namespace test.Controllers
 
                     //await _signInManager.SignInAsync(user, isPersistent: false);
                     //_logger.LogInformation("User created a new account with password.");
-                    return RedirectToAction("index", "Users");
+                    return RedirectToAction("Login");
                 }
                 AddErrors(result);
             }
